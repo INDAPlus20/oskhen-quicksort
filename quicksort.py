@@ -52,8 +52,14 @@ def sort(lst):
 
 
 if __name__ == '__main__':
+    
+    ### 0.46
+    # numbers = sort([int(x) for x in input().split(" ")[1:]])
+    # x = ' '.join([str(x) for x in numbers])
+    # print(x)
+
+    ### 0.38
     numbers = list(map(int, input().split(" ")[1:]))
     x = ' '.join(list(map(str, sort(numbers))))
-    print(x)
-    #print(f"{''.join(list(map(int, sort(numbers))))}")
+    print(x) 
 
