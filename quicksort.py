@@ -1,22 +1,17 @@
 #!/usr/bin/env python3
 import math
 
+INSERT_SWITCH = 10 # Empirically tested
+
 def sort(lst):
-    lst.sort()
-    return lst
 
-def quicksort(lst):
-
-    def pivot(lst, lo, hi):
-        mid = math.floor((lo+hi) / 2)
-        if lst[mid] < lst[lo]:
-            lst[lo], lst[mid] = lst[mid], lst[lo]
-        if lst[hi] < lst[lo]:
-            lst[lo], lst[hi] = lst[hi], lst[lo]
-        if lst[mid] < lst[hi]:
-            lst[mid], lst[hi] = lst[hi], lst[mid]
-        
-        return lst[hi]
+    def insert_sort(lst, lo, hi):
+        for i in range(lo, hi):
+            for j in range(i, 0, -1):
+                if lst[j] < lst[j-1]:
+                    lst[j], lst[j-1] = lst[j-1], lst[j]
+                else:
+                    break
 
     def partition(lst, lo, hi):
 
@@ -40,20 +35,25 @@ def quicksort(lst):
             lst[i], lst[j] = lst[j], lst[i]
 
 
-    def internal(lst, lo, hi):
+    def quicksort(lst, lo, hi):
         if lo < hi:
-            p = partition(lst, lo, hi)
-            internal(lst, lo, p)
-            internal(lst, p + 1, hi)
+            if hi - lo < INSERT_SWITCH:
+                insert_sort(lst, lo, hi+1)
+            else:
+                p = partition(lst, lo, hi)
+                quicksort(lst, lo, p)
+                quicksort(lst, p + 1, hi)
     
-    internal(lst, 0, len(lst) - 1)
+
+    quicksort(lst, 0, len(lst) - 1)
 
     return lst
     
 
+
 if __name__ == '__main__':
     numbers = list(map(int, input().split(" ")[1:]))
-    x = ' '.join(list(map(str, quicksort(numbers))))
+    x = ' '.join(list(map(str, sort(numbers))))
     print(x)
     #print(f"{''.join(list(map(int, sort(numbers))))}")
 
